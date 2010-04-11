@@ -1,0 +1,21 @@
+{% extends "sermon/base.html" %}
+{% block page-class %}sermons{% endblock %}
+{% block title %}Sermon: {{sermon.title}} at {% endblock %}
+
+{% block content %}
+{% load markup %}
+  <h2>{{sermon.title}}</h2>
+  <h3>By {{sermon.speaker}}</h3>
+  <h3>Readings</h3>
+  {% for reading in sermon.readings.all %}
+    <div class="reading">
+      <h4>{{reading.source}}</h4>
+      {{reading.text|markdown}}
+    </div>
+  {% endfor %}
+
+  <h3>The Sermon</h3>
+  {{sermon.body|markdown}}
+
+{% endblock %}
+

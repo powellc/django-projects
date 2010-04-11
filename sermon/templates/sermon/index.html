@@ -1,0 +1,14 @@
+{% extends "sermon/base.html" %}
+{% block page-class %}sermons{% endblock %}
+{% block title %}Sermons at {% endblock %}
+
+{% block content %}
+{% load markup %}
+  <h2>Sermons</h2>
+  <ul>
+  {% for sermon in sermons %}
+     <li><a href="{{sermon.get_absolute_url}}">{{sermon.title}}</a> - {{sermon.speaker.name}}</li>
+  {% endfor %}
+  </ul>
+{% endblock %}
+
