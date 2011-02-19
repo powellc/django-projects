@@ -1,21 +1,41 @@
 {% extends "sermon/base.html" %}
 {% block page-class %}sermons{% endblock %}
 {% block title %}Sermon: {{sermon.title}} at {% endblock %}
+{% load markup typogrify inlines %}
 
-{% block content %}
-{% load markup %}
-  <h2>{{sermon.title}}</h2>
-  <h3>By {{sermon.speaker}}</h3>
-  <h3>Readings</h3>
-  {% for reading in sermon.readings.all %}
-    <div class="reading">
-      <h4>{{reading.source}}</h4>
-      {{reading.text|markdown}}
-    </div>
-  {% endfor %}
+{% block body %}
+<div id="content" class="span-16">
+<div class="span-10">
+<h2>{{sermon.title}}</h2>
+<h3 class="alt">A sermon by {{sermon.speaker}}</h3>
+<h3>{{sermon.date|date:"F j, Y"}}</h3>
+</div>
 
-  <h3>The Sermon</h3>
-  {{sermon.body|markdown}}
+<div class="span-5 last" >
+  <dl id="audio-player" class="box">
+    <dt>Watch the sermon</dt>
+    <dd>  
+	  This could have an audio player.
+    </dd>
+  </dl>
+</div>
+
+<div class="span-15 last sermon-body">
+  {{sermon.body|render_inlines|typogrify|markdown}}
+  <p><a href="{% url sr-index %}">Read more sermons</a></p>
+</div>
+</div>
+
+<div id="readings" class="span-6 box last">
+<h2>Readings</h2>
+<ol>
+{% for reading in sermon.readings.all %}
+  <li><h5>From {{reading.source}}</h5>
+  <div class="eading" id="reading-{{reading.id}}">
+    {{reading.text|typogrify|markdown}}
+  </div></li>
+{% endfor %}
+</ol>
+</div>
 
 {% endblock %}
-

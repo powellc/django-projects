@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 from datetime import datetime
+from sermon.managers import PublicManager
 
 class StandardMetadata(models.Model):
     """
@@ -51,9 +52,17 @@ class Sermon(StandardMetadata):
     largemp3file = models.FileField(upload_to="sermons/",blank=True,help_text=_("Optional. Preferably a 64kps version."))
     body = models.TextField(_('body'))
     published = models.BooleanField(_('published'), default=True)
+    publish_on = models.DateTimeField()
+    objects = PublicManager()
 
+    class Meta:
+        verbose_name = _('sermon')
+        verbose_name_plural = _('sermons')
+        ordering = ('-publish_on',)
+        get_latest_by = 'publish_on'
+    
     def __unicode__(self):
-        return self.date.isoformat() + " - '" + self.title + "' - " + self.speaker.name
+        return u'%s - %s - %s' % (self.date.isoformat(), self.title, self.speaker.name)
 
     def get_absolute_url(self):
         args=[self.slug]

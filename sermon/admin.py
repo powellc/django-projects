@@ -3,7 +3,7 @@ from sermon.models import Sermon, Reading, Speaker
 
 class SermonAdmin(admin.ModelAdmin):
     
-    list_display = ('title', 'speaker', 'date', )
+    list_display = ('title', 'speaker', 'date', 'published', 'publish_on')
     search_fields = ('title','body','speaker',)
     list_filter = ('published','speaker',)
     
