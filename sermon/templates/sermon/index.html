@@ -3,26 +3,27 @@
 {% block title %}Sermons at {% endblock %}
 
 {% block body %}
-{% load markup typogrify %}
-  <h2>Sermons</h2>
+{% load humanize markup typogrify %}
+  <div class="grid_12">
+    <h2>Sermons</h2>
+  </div>
   {% for sermon in sermons %}
   {% if forloop.first %}
-  <div id="sermon-left" class="span-11 colborder">
+  <div id="sermon-left" class="grid_6">
      <h3 class="title">{{ sermon.title }}</h3>
-     <h4 class="alt date">{{ sermon.publish_on|date:"l, F j, Y" }}</h4>
+     <h4 class="alt date">{{ sermon.publish_on|naturalday }}</h4>
      {{ sermon.body|typogrify|markdown|truncatewords:100}}
 	 <p><a href="{{sermon.get_absolute_url}}" alt="Sermon: {{sermon}}">Continue reading</a></p>
   </div>
   {% endif %}
   {% ifequal forloop.counter 2 %}
-  <div id="sermon-right" class="span-11 last">
+  <div id="sermon-right" class="grid_6">
      <h3 class="title">{{ sermon.title }}</h3>
-     <h4 class="alt date">{{ sermon.publish_on|date:"l, F j, Y" }}</h4>
+     <h4 class="alt date">{{ sermon.publish_on|naturalday }}</h4>
      {{ sermon.body|typogrify|markdown|truncatewords:100}}
 	 <p><a href="{{sermon.get_absolute_url}}" alt="Sermon: {{sermon}}">Continue reading</a></p>
   </div>
   {% endifequal %}
   {% endfor %}
-
 {% endblock %}
 
