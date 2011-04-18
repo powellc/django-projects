@@ -1,0 +1,30 @@
+{% extends "projects/base.html" %}
+{% block page-class %}involved{% endblock %}
+{% block title %}Get involved at {% endblock %}
+
+{% block body %}
+{% load humanize markup typogrify %}
+  <div class="grid_12">
+    <h2>Get Involved!</h2>
+  </div>
+  {% for project in objects %}
+  {% if forloop.first %}
+  <div id="sermon-left" class="grid_6">
+     <h3 class="title">{{ project.title }}</h3>
+     {% if project.start %}<h4 class="alt date">{{ project.start|naturalday }}</h4>{% endif %}
+     {{ project.description|typogrify|markdown }}
+     <p><a href="{{project.get_absolute_url}}" alt="Project: {{project}}">More info</a></p>
+  </div>
+  {% else %}
+  {% ifequal forloop.counter 2 %}
+  <div id="sermon-right" class="grid_6">
+  {% endifequal %}
+     <h3 class="title">{{ project.title }}</h3>
+     <p><a href="{{project.get_absolute_url}}" alt="Project: {{project}}">More info</a></p>
+  {% ifequal forloop.counter 2 %}
+  </div>
+  {% endifequal %}
+  {% endif %}
+  {% endfor %}
+{% endblock %}
+

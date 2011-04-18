@@ -1,0 +1,52 @@
+{% extends "projects/base.html" %}
+{% block page-class %}involved{% endblock %}
+{% block title %}{{project}} at {% endblock %}
+
+{% block content %}
+<h2>{{object.title}}</h2>
+{{object.description|typogrify|markdown}}
+
+<hr style="clear:both;" />
+
+<div id="" class="grid_4">
+
+</div>
+
+<div id="column_1" class="grid_4">
+    {% if object.photos.all %}
+    <h3 class="alt">Latest photos</h3>
+    {% for relphoto in photos.all %}
+    <p><a href="{{relphoto.photo.get_absolute_url}}"><img src="{{relphoto.photo.get_preview_url}}" /></a></p>
+    {% endfor %}
+    {% endif %}
+</div>
+
+<div id="column_2" class="grid_4">
+    {% if object.articles.all %}
+    <h2>Recent news</h2>
+    {% for relarticle in object.articles.all %}
+    {% if forloop.first %}
+    <h3 class="alt">{{relarticle.article.title}}</h3>
+    {{relarticle.article.description|typogrify|markdown}}
+    <p><a href="{{ relarticle.article.get_absolute_url }}">Continue reading</a></p>
+    <hr />
+    {% else %}
+    <h3><a href="{{ relarticle.article.get_absolute_url }}" alt="Read {{article}}">{{article}}</a></h3> 
+    {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+  <div class="newsletter-list sidebar-padding">
+    {% if object.events.all %}
+    <h2 >Upcoming events</h2>
+    {% load humanize %}
+    {% for relevent in object.events.all %}
+    <h3 class="caps">{{relevent.event.start|naturalday}}</h3>
+    <h4>{{relevent.event.title}}</h4>
+    {{relevent.event.description|typogrify}}
+    {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}
