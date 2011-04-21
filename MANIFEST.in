@@ -1,2 +1,3 @@
 include README.rst
-recursive-include projects/templates *
+recursive-include projects/templates/projects *
+recursive-include projects/templatetags *
