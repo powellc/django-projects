@@ -3,7 +3,7 @@ Django Projects
 :author: Colin Powell
 :date: 2011-03-06
 :copyright: One Cardinal Web Development
-:license: GPLv3
+:license: BSD
 
 A "collector" django application where projects hold various types of info, and add to 
 
